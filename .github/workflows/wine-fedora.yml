@@ -1,8 +1,8 @@
 name: Wine Fedora CI
 
 on:
-  schedule:
-    - cron:  '25 9,21 * * *'
+  # schedule:
+  #   - cron:  '25 9,21 * * *'
   workflow_dispatch:
 
 jobs:
@@ -10,12 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     container: fedora:latest
     steps:
-
       - uses: actions/checkout@v4
       - name: Compilation
         run: |
           sudo dnf -y -q upgrade --refresh
-          cd wine-tkg-git 
+          cd wine-tkg-git
           sed -i 's/_NOLIB32="false"/_NOLIB32="wow64"/' wine-tkg-profiles/advanced-customization.cfg
           echo '_ci_build="true"' >> customization.cfg
           touch tarplz
